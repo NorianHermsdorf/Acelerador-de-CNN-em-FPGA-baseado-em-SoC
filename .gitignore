@@ -1,6 +1,7 @@
-lenet5_pga.runs/
-lenet5_pga.gen/
-lenet5_pga.hw/
+Lenet5_FPGA.runs/
+Lenet5_FPGA.hw/
+Lenet5_FPGA.cache/
+Lenet5_FPGA.ip_user_files/
 .Xil/
 *.log
 *.jou
