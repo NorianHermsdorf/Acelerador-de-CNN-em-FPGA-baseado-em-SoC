@@ -1,0 +1,6 @@
+lenet5_pga.runs/
+lenet5_pga.gen/
+lenet5_pga.hw/
+.Xil/
+*.log
+*.jou

@@ -1,0 +1,25 @@
+verilog xil_defaultlib --include "../../../../lenet5_pga.srcs/sources_1/bd/lenet5/ipshared/ec67/hdl" --include "../../../../lenet5_pga.srcs/sources_1/bd/lenet5/ipshared/8c62/hdl" --include "../../../../lenet5_pga.srcs/sources_1/bd/lenet5/ip/lenet5_processing_system7_0_0_1" \
+"../../../bd/lenet5/ip/lenet5_lenet5_top_0_0/sim/lenet5_lenet5_top_0_0.v" \
+"../../../bd/lenet5/ip/lenet5_blk_mem_gen_0_0/sim/lenet5_blk_mem_gen_0_0.v" \
+"../../../bd/lenet5/ip/lenet5_blk_mem_gen_0_1/sim/lenet5_blk_mem_gen_0_1.v" \
+"../../../bd/lenet5/ip/lenet5_blk_mem_gen_0_2/sim/lenet5_blk_mem_gen_0_2.v" \
+"../../../bd/lenet5/ip/lenet5_blk_mem_gen_0_3/sim/lenet5_blk_mem_gen_0_3.v" \
+"../../../bd/lenet5/ip/lenet5_xlslice_0_0/sim/lenet5_xlslice_0_0.v" \
+"../../../bd/lenet5/ip/lenet5_xlslice_0_1/sim/lenet5_xlslice_0_1.v" \
+"../../../bd/lenet5/ip/lenet5_xlslice_1_0/sim/lenet5_xlslice_1_0.v" \
+"../../../bd/lenet5/ip/lenet5_xlconcat_0_0/sim/lenet5_xlconcat_0_0.v" \
+"../../../bd/lenet5/ip/lenet5_xlslice_3_0/sim/lenet5_xlslice_3_0.v" \
+"../../../bd/lenet5/ip/lenet5_xlslice_3_1/sim/lenet5_xlslice_3_1.v" \
+"../../../bd/lenet5/ip/lenet5_processing_system7_0_0_1/sim/lenet5_processing_system7_0_0.v" \
+"../../../bd/lenet5/ip/lenet5_xbar_0/sim/lenet5_xbar_0.v" \
+"../../../bd/lenet5/ip/lenet5_xlconstant_0_1/sim/lenet5_xlconstant_0_1.v" \
+"../../../bd/lenet5/ip/lenet5_xlslice_3_2/sim/lenet5_xlslice_3_2.v" \
+"../../../bd/lenet5/ip/lenet5_auto_pc_1/sim/lenet5_auto_pc_1.v" \
+"../../../bd/lenet5/ip/lenet5_auto_us_0/sim/lenet5_auto_us_0.v" \
+"../../../bd/lenet5/ip/lenet5_auto_ds_0/sim/lenet5_auto_ds_0.v" \
+"../../../bd/lenet5/ip/lenet5_auto_pc_0/sim/lenet5_auto_pc_0.v" \
+"../../../bd/lenet5/sim/lenet5.v" \
+
+verilog xil_defaultlib "glbl.v"
+
+nosort
