@@ -1,8 +1,0 @@
-vhdl xil_defaultlib  \
-"../../../bd/lenet5/ip/lenet5_axi_gpio_0_0/sim/lenet5_axi_gpio_0_0.vhd" \
-"../../../bd/lenet5/ip/lenet5_bram_ctrl_a_0/sim/lenet5_bram_ctrl_a_0.vhd" \
-"../../../bd/lenet5/ip/lenet5_bram_ctrl_b_0/sim/lenet5_bram_ctrl_b_0.vhd" \
-"../../../bd/lenet5/ip/lenet5_bram_ctrl_pesos_0/sim/lenet5_bram_ctrl_pesos_0.vhd" \
-"../../../bd/lenet5/ip/lenet5_rst_ps7_0_100M_0/sim/lenet5_rst_ps7_0_100M_0.vhd" \
-
-nosort
