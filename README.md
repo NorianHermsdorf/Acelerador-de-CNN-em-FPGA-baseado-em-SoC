@@ -10,6 +10,12 @@ O objetivo deste trabalho é mitigar o custo computacional das operações de Mu
 
 ## Arquitetura e Fluxo de Dados
 
+O sistema baseia-se na co-projeto hardware/software, utilizando a infraestrutura do SoC Zynq-7000 para acelerar as camadas convolucionais da LeNet-5.
+
+[Diagrama de Arquitetura Global](./img/diagrama_arquitetura.png)
+
+*O diagrama acima ilustra a integração entre o PS (ARM) e a PL (FPGA), destacando os controladores de memória, barramentos AXI e o fluxo de dados para os aceleradores.*
+
 O projeto abrange desde o treinamento do modelo até a implementação RTL:
 
 1. **Treinamento:** Realizado em Python (PyTorch) para definição dos pesos ideais.
