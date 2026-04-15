@@ -35,7 +35,7 @@ entity conv_control is
         x_rd_addr : out std_logic_vector(ADDR_AB_WIDTH-1 downto 0);
         x_rd_din : in  std_logic_vector(BRAM_WIDTH-1 downto 0);
         
-        -- BRAM SAÕDA
+        -- BRAM SA√çDA
         y_wr_addr : out std_logic_vector(ADDR_AB_WIDTH-1 downto 0);
         y_wr_dout  : out std_logic_vector(BRAM_WIDTH-1 downto 0);
         y_wr_we   : out std_logic_vector(WE_WIDTH-1 downto 0);
@@ -114,7 +114,7 @@ architecture Behavioral of conv_control is
     signal bias_r : long_signed_array(1 TO TOTAL_BIAS_WORDS * WEIGHTS_PER_WORD) := (others => (others=> '0'));
     
     -- ====================================================
-    -- SINAIS DO SHIFT REGISTER (O T˙nel do Tempo de 4 posiÁıes)
+    -- SINAIS DO SHIFT REGISTER (O T√∫nel do Tempo de 4 posi√ß√µes)
     -- ====================================================
     type addr_array_t is array (0 to DP_LATENCY - 1) of std_logic_vector(ADDR_PSUM_WIDTH - 1 downto 0);
     signal addr_sr        : addr_array_t := (others => (others => '0'));
@@ -125,7 +125,7 @@ architecture Behavioral of conv_control is
     signal channel_sr     : chan_array_t := (others => 0);
     
     -- ====================================================
-    -- SINAIS DO EMPACOTADOR DE SAÕDA
+    -- SINAIS DO EMPACOTADOR DE SA√çDA
     -- ====================================================
     signal y_pack     : std_logic_vector(BRAM_WIDTH-1 downto 0) := (others => '0');
     signal y_byte_idx : integer range 0 to PIXELS_PER_WORD - 1 := 0;
@@ -141,7 +141,7 @@ architecture Behavioral of conv_control is
     signal addr_queue       : out_addr_array_t := (others => (others => '0'));
     signal items_in_queue   : integer range 0 to PARALLEL_FILTERS := 0;
     
-    -- M·quina de Estados
+    -- M√°quina de Estados
     type states is(IDLE, LOAD_PIXELS, WAIT_LATENCY, STREAM_PIXELS, FLUSH_PIPE, NEXT_CHANNEL, DONE_LAYER);
     signal state : states := IDLE;
     
@@ -159,8 +159,8 @@ begin
     conv_result_r <= result_in;
     
     -- ====================================================
-    -- O GATILHO DA BRAM DE PSUM (Din‚mico e Limpo)
-    -- Dispara a leitura 2 ciclos depois que o dado entra (Õndice 1 do SR)
+    -- O GATILHO DA BRAM DE PSUM (Din√¢mico e Limpo)
+    -- Dispara a leitura 2 ciclos depois que o dado entra (√çndice 1 do SR)
     -- ====================================================
     ps_rd_addr <= addr_sr(DP_LATENCY - BRAM_LATENCY - 1);
     ps_rd_en   <= '1' when (valid_sr(DP_LATENCY - BRAM_LATENCY - 1) = '1' and channel_sr(DP_LATENCY - BRAM_LATENCY - 1) /= 0) else '0';
@@ -241,7 +241,7 @@ begin
                             p_valid_r <= '0';
                         end if;
 
-                        -- Contador Espacial (A leitura da PSum foi movida para fora)
+                        -- Contador Espacial
                         if (win_valid_r = '1') then
                             if (spatial_cnt = TOTAL_WINDOWS - 1) then
                                 state <= FLUSH_PIPE; 
@@ -250,7 +250,7 @@ begin
                         end if;
 
                     when FLUSH_PIPE =>
-                        -- MantÈm o relÛgio girando atÈ o Shift Register secar inteiro (Todos os 4 est·gios = 0)
+                        -- Mant√©m o rel√≥gio girando at√© o Shift Register secar inteiro (Todos os 4 est√°gios = 0)
                         if (unsigned(valid_sr) = 0 and win_valid_r = '0') then
                             if(conv_done = '1') then
                                 state <= NEXT_CHANNEL;
@@ -296,13 +296,13 @@ begin
     process(clk)
     begin
         if rising_edge(clk) then
-            -- Est·gio 0
+            -- Est√°gio 0
             addr_sr(0)    <= std_logic_vector(spatial_cnt);
             valid_sr(0)   <= win_valid_r;
             channel_sr(0) <= channel_cnt;
             last_window_sr(0) <= last_window;
             
-            -- Est·gio 1 atÈ DP_LATENCY - 1
+            -- Est√°gio 1 at√© DP_LATENCY - 1
             for i in 1 to DP_LATENCY - 1 loop
                 addr_sr(i)    <= addr_sr(i - 1);
                 valid_sr(i)   <= valid_sr(i - 1);
@@ -313,7 +313,7 @@ begin
     end process;
 
     -- ====================================================
-    -- PROCESSO 3: CONSUMIDOR (No final do T˙nel: DP_LATENCY - 1)
+    -- PROCESSO 3: CONSUMIDOR (No final do T√∫nel: DP_LATENCY - 1)
     -- ====================================================
     process(clk)
         variable soma_parcial  : long_signed_array(1 to PARALLEL_FILTERS);
@@ -352,7 +352,6 @@ begin
                         end if;
                         
                     when W_LOAD_BIAS =>
-                        -- (Carregamento omitido para encurtar foco, n„o mudou)
                         if(bias_words_cnt < TOTAL_BIAS_WORDS) then
                             w_rd_addr <= std_logic_vector(FILTER_BASE + to_unsigned(weight_ptr, ADDR_W_WIDTH));
                             weight_ptr <= weight_ptr + 1;
@@ -406,7 +405,7 @@ begin
                         end if;
                         
                     when W_CONVOLUTION =>
-                        -- O dado chegou no final do t˙nel? (Õndice DP_LATENCY - 1)
+                        -- O dado chegou no final do t√∫nel? (√çndice DP_LATENCY - 1)
                         if (valid_sr(DP_LATENCY - 1) = '1') then
                             
                             for p in 1 to PARALLEL_FILTERS loop
@@ -421,7 +420,7 @@ begin
                                   
                             end loop;
                            
-                            -- … O ⁄LTIMO CANAL?
+                            -- √â O √öLTIMO CANAL?
                             if (channel_sr(DP_LATENCY - 1) = CHANNELS - 1) then
                                 ps_wr_we <= (others => '0');
                                 
@@ -455,7 +454,7 @@ begin
                                 end if;   
                                            
                             else
-                                -- CANAIS INTERMEDI¡RIOS
+                                -- CANAIS INTERMEDI√ÅRIOS
                                 ps_wr_addr <= addr_sr(DP_LATENCY - 1);
                                 ps_wr_dout  <= ps_pack_next;
                                 ps_wr_we   <= (others => '1');
@@ -507,7 +506,7 @@ begin
     end process;
 
     -- ====================================================
-    -- INST¬NCIAS 
+    -- INST√ÇNCIAS 
     -- ====================================================
     line_b: ENTITY WORK.line_buffer
         generic map( 
