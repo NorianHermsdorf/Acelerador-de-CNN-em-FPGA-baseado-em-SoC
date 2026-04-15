@@ -20,7 +20,7 @@ O projeto abrange desde o treinamento do modelo até a implementação RTL:
 
 1. **Treinamento:** Realizado em Python (PyTorch) para definição dos pesos ideais.
 2. **Quantização:** Conversão dos parâmetros para ponto fixo (Integer/Fixed-point) para otimização de recursos na FPGA.
-3. **Hardware Mapping:** Implementação de Unidades de Processamento (PEs) e hierarquia de memória baseada em BRAMs para reduzir o gargalo de Von Neumann.
+3. **Hardware Mapping:** Implementação de Unidades de Processamento (PEs) e hierarquia de memória baseada em BRAMs para reduzir o gargalo.
 
 ## Estrutura do Repositório
 
