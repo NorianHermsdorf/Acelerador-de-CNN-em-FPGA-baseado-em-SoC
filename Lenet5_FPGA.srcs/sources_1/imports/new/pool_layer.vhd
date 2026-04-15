@@ -26,7 +26,7 @@ entity pool_layer is
         x_rd_addr : out std_logic_vector(ADDR_AB_WIDTH-1 downto 0);
         x_rd_din  : in  std_logic_vector(BRAM_WIDTH-1 downto 0);
         
-        -- BRAM SAÍDA
+        -- BRAM SAÃDA
         y_wr_addr : out std_logic_vector(ADDR_AB_WIDTH-1 downto 0);
         y_wr_dout  : out std_logic_vector(BRAM_WIDTH-1 downto 0);
         y_wr_we   : out std_logic_vector(WE_WIDTH-1 downto 0)
@@ -71,11 +71,11 @@ architecture Behavioral of pool_layer is
     signal window_out_r : signed_array(1 to (KERNEL * KERNEL));
     signal max_r        : signed(DATA_WIDTH - 1 downto 0);
     
-    -- Sinais do Empacotador de Saída (Consumidor)
+    -- Sinais do Empacotador de SaÃ­da
     signal y_pack       : std_logic_vector(BRAM_WIDTH-1 downto 0) := (others => '0');
     signal y_byte_idx   : integer range 0 to PIXELS_PER_WORD - 1 := 0;
 
-    -- Máquina de Estados (Nomenclatura idêntica a ConvControl)
+    -- MÃ¡quina de Estados
     type states is(IDLE, LOAD_PIXELS, WAIT_LATENCY, STREAM_PIXELS, FLUSH_PIPE, NEXT_CHANNEL, DONE_LAYER);
     signal state : states := IDLE;
     
@@ -133,7 +133,7 @@ begin
                         else
                             x_curr_buf <= x_rd_din; 
                             
-                            -- Prefetch da próxima palavra se houver
+                            -- Prefetch da prÃ³xima palavra se houver
                             if (x_addr_idx < (channel_cnt + 1) * WORDS_PER_IMG) then 
                                 x_rd_addr <= std_logic_vector(IN_BASE + to_unsigned(x_addr_idx, ADDR_AB_WIDTH));
                                 x_addr_idx <= x_addr_idx + 1;
@@ -143,7 +143,7 @@ begin
                         end if;
                         
                     when STREAM_PIXELS =>
-                        -- INJEÇÃO DE PIXELS NO LINE BUFFER
+                        -- INJEÃ‡ÃƒO DE PIXELS NO LINE BUFFER
                         if (pixel_cnt < PIXELS_PER_IMG) then
                             current_pixel := get_byte(x_curr_buf, x_byte_idx);
                             pixel_r       <= signed(current_pixel);
@@ -220,7 +220,7 @@ begin
                         end if;
                     when W_POOLING =>
                         lb_reset    <= '0';
-                         -- CONTROLE ESPACIAL (Baseado nas janelas válidas que saem do LB)
+                         -- CONTROLE ESPACIAL (Baseado nas janelas vÃ¡lidas que saem do LB)
                         if (win_valid_r = '1') then
                             spatial_cnt <= spatial_cnt + 1;
                         else
@@ -234,7 +234,7 @@ begin
                             y_pack_next := y_pack;
                             y_pack_next((8 * y_byte_idx) + 7 downto (8 * y_byte_idx)) := std_logic_vector(max_r);
                             
-                            -- Escreve na BRAM se encheu a palavra OU se é a última janela do canal
+                            -- Escreve na BRAM se encheu a palavra OU se Ã© a Ãºltima janela do canal
                             if (y_byte_idx = PIXELS_PER_WORD - 1) or (spatial_cnt = TOTAL_WINDOWS - 1) then
                                 y_wr_dout  <= y_pack_next;
                                 y_wr_addr <= std_logic_vector(OUT_BASE + out_addr_idx);
@@ -266,7 +266,7 @@ begin
     end process;
 
     -- ====================================================
-    -- INSTÂNCIAS 
+    -- INSTÃ‚NCIAS 
     -- ====================================================
     max_pooling: ENTITY WORK.pool_datapath_max
         generic map( 
