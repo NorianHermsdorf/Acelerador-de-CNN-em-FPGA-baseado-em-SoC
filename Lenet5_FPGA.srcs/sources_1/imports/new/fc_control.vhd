@@ -17,7 +17,7 @@ ENTITY fc_control IS
         start    : in  std_logic;
         busy, done : out std_logic;
         
-        -- Endereços Base
+        -- EndereÃ§os Base
         W_BASE : in unsigned(ADDR_W_WIDTH-1 downto 0);
         IN_BASE : in unsigned(ADDR_AB_WIDTH-1 downto 0);
         OUT_BASE : in unsigned(ADDR_AB_WIDTH-1 downto 0);
@@ -30,7 +30,7 @@ ENTITY fc_control IS
         x_rd_addr : out std_logic_vector(ADDR_AB_WIDTH-1 downto 0);
         x_rd_din : in  std_logic_vector(BRAM_WIDTH-1 downto 0);
         
-        -- Porta BRAM B Escrita (Saída)
+        -- Porta BRAM B Escrita (SaÃ­da)
         y_wr_addr : out std_logic_vector(ADDR_AB_WIDTH-1 downto 0);
         y_wr_dout  : out std_logic_vector(BRAM_WIDTH-1 downto 0);
         y_wr_we   : out std_logic_vector(WE_WIDTH-1 downto 0);
@@ -56,10 +56,10 @@ ARCHITECTURE Behavioral OF fc_control IS
                     RUN_BATCH, WAIT_Y, WRITE_OUT, NEXT_GROUP, DONE_S);
     signal state : states := IDLE;
     
-    -- Índices
+    -- Ãndices
     signal g_idx    : integer range 0 to GROUPS-1 := 0;
     signal xw_idx   : integer range 0 to BYTES_PER_WORD := 0;
-    signal w_req_idx : integer range 0 to N_INPUTS := 0; ---contador de requisições
+    signal w_req_idx : integer range 0 to N_INPUTS := 0; ---contador de requisiÃ§Ãµes
     signal step_idx : integer range 0 to N_INPUTS := 0; ---(0..N_IN-1)
     
     signal x_addr_idx: integer range 0 to WORDS_TOTAL_X := 0;
@@ -69,7 +69,7 @@ ARCHITECTURE Behavioral OF fc_control IS
     signal x_curr_buf : std_logic_vector(BRAM_WIDTH-1 downto 0); -- Buffer em uso
     signal x_next_buf : std_logic_vector(BRAM_WIDTH-1 downto 0); -- Buffer de prefetch
     
-    -- Controle de Latência
+    -- Controle de LatÃªncia
     signal lat_cnt : integer range 0 to BRAM_LATENCY+1 := 0;
     signal lane_en_r : std_logic_vector(1 to LANES) := (others => '0');
      
@@ -105,7 +105,7 @@ BEGIN
                         end if;
 
                     -- ========================================================
-                    -- 1. DISPARO SIMULTÂNEO (Bias na A + Primeiro X na B)
+                    -- 1. DISPARO SIMULTÃ‚NEO (Bias na A + Primeiro X na B)
                     -- ========================================================
                     when FETCH_PARALLEL_INIT =>
                         -- A) Configura Lanes
@@ -120,7 +120,7 @@ BEGIN
                         
                         -- C) Dispara Leitura X[0] (Porta B)
                         xw_idx <= 0;
-                        x_rd_addr <= std_logic_vector(IN_BASE); -- Endereço 0 da entrada
+                        x_rd_addr <= std_logic_vector(IN_BASE); -- EndereÃ§o 0 da entrada
                         x_addr_idx <= x_addr_idx + 1;
                         
                         lat_cnt <= 0;
@@ -158,9 +158,9 @@ BEGIN
                     when RUN_BATCH =>
                         
                         -- PEDIDO DE PESOS (Pipeline Especulativo)
-                        -- Sempre pede o próximo peso para manter o fluxo contínuo.
+                        -- Sempre pede o prÃ³ximo peso para manter o fluxo contÃ­nuo.
                         if (step_idx < N_INPUTS) then
-                             -- Dispara leitura do próximo peso
+                             -- Dispara leitura do prÃ³ximo peso
                              if(w_req_idx < N_INPUTS) then
                                 w_rd_addr <= std_logic_vector(W_BASE + to_unsigned(w_b_addr_idx, ADDR_W_WIDTH));
                                 w_b_addr_idx <= w_b_addr_idx + 1;
@@ -169,9 +169,9 @@ BEGIN
                              end if;
                         end if;
 
-                        -- VERIFICAÇÃO DE LATÊNCIA (Apenas para o PRIMEIRO dado)
-                        -- Isso só segura o datapath até o primeiro peso chegar.
-                        -- Depois que lat_cnt atinge o limite, o fluxo é contínuo.
+                        -- VERIFICAÃ‡ÃƒO DE LATÃŠNCIA (Apenas para o PRIMEIRO dado)
+                        -- Isso sÃ³ segura o datapath atÃ© o primeiro peso chegar.
+                        -- Depois que lat_cnt atinge o limite, o fluxo Ã© contÃ­nuo.
                         if lat_cnt < BRAM_LATENCY then
                             lat_cnt <= lat_cnt + 1;
                             dp_step_en <= '0'; -- Pausa o datapath, mas os pesos continuam sendo pedidos acima!
@@ -186,15 +186,13 @@ BEGIN
                                 dp_step_en <= '1';
                                 dp_load_bias <= '0';
                                 
-                                -- Nota: w_addr já foi tratado lá em cima
-                                
-                                -- Aplica pesos (que chegaram da latência)
+                                -- Aplica pesos (que chegaram da latÃªncia)
                                 for i in 1 to LANES loop
                                     dp_w_in(i) <= signed(w_rd_din(8*i-1 downto 8*(i-1)));
                                     dp_bias_in(i) <= (others => '0');
                                 end loop;
                                 
-                                -- 2. Lógica de Pipeline de Memória (Prefetch X)
+                                -- 2. LÃ³gica de Pipeline de MemÃ³ria (Prefetch X)
                                 if(xw_idx = 0) then 
                                     if (x_addr_idx < WORDS_TOTAL_X) then 
                                         x_rd_addr <= std_logic_vector(IN_BASE + to_unsigned(x_addr_idx, ADDR_AB_WIDTH));
@@ -207,7 +205,7 @@ BEGIN
                                     x_next_buf <= x_rd_din;
                                 end if;
                                 
-                                -- 3. Avanço de Índices
+                                -- 3. AvanÃ§o de Ãndices
                                 if(xw_idx = BYTES_PER_WORD - 1) then
                                     xw_idx <= 0; 
                                     x_curr_buf <= x_next_buf; 
@@ -224,7 +222,7 @@ BEGIN
                             end if;
                         end if;
                     -- ========================================================
-                    -- 3. FINALIZAÇÃO E ESCRITA
+                    -- 3. FINALIZAÃ‡ÃƒO E ESCRITA
                     -- ========================================================
                     when WAIT_Y =>
                         dp_step_en <= '0';
