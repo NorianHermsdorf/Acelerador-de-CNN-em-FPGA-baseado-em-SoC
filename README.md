@@ -31,17 +31,15 @@ O trabalho segue o fluxo de projeto para sistemas embarcados baseados em SoC:
 3.  **Integração PYNQ:** Geração do overlay (`.bit` e `.hwh`) e desenvolvimento drivers em Python.
 4.  **Avaliação de Desempenho:** Comparação de latência e consumo entre CPU e Acelerador.
 
-## 🛠️ Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 * **Linguagem de Descrição de Hardware:** VHDL.
 * **Ferramentas de EDA:** Xilinx Vivado Design Suite.
 * **Plataforma de Hardware:** Zynq-7000 SoC (Zybo/ZedBoard).
 * **Ambiente de Software:** PYNQ (Python on Zynq).
 
-## 🎓 Autor e Orientação
-
+## Autor
 * **Autor:** Norian Silva Aredes Hermsdorf
-* **Orientador:** Prof. Dr. Anibal Cotrina Atencio
 * **Instituição:** Universidade Federal do Espírito Santo (UFES) - Centro Universitário Norte do Espírito Santo (CEUNES).
 
 ---
