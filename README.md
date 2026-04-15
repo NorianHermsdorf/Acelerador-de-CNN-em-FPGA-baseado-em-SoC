@@ -7,7 +7,7 @@ A arquitetura proposta foi desenvolvida para ser compatível com as restrições
 
 * Gestão de Memória: Possui uma complexidade moderada que permite o armazenamento completo de pesos e mapas de características na memória interna (BRAM) do FPGA, facilitando o estudo de latência e largura de banda sem gargalos externos iniciais.
 
-*Análise de Desempenho: A estrutura da rede é suficientemente rica para permitir a análise de estratégias de paralelismo espacial e reutilização temporal de dados, focos principais desta pesquisa.
+* Análise de Desempenho: A estrutura da rede é suficientemente rica para permitir a análise de estratégias de paralelismo espacial e reutilização temporal de dados, focos principais desta pesquisa.
 
 ## Resumo do Projeto
 
