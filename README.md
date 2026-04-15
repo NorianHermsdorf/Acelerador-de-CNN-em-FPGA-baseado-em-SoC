@@ -1,6 +1,13 @@
 # Projeto e Implementação de um Acelerador de CNN em FPGA baseado em SoC
 
-Este repositório contém o desenvolvimento de um acelerador de hardware dedicado à rede neural convolucional **LeNet-5**, implementado em ambiente **SoC (System-on-Chip) Zynq-7000**. O projeto é parte integrante do Trabalho de Conclusão de Curso de Engenharia da Computação na **UFES - Campus São Mateus**.
+Este repositório apresenta o desenvolvimento de um acelerador de hardware genérico para Redes Neurais Convolucionais (CNNs), implementado em ambiente SoC Zynq-7000. O objetivo principal é o projeto de uma arquitetura RTL otimizada para o processamento de camadas convolucionais e densas, utilizando o modelo LeNet-5 como base de validação.
+A arquitetura proposta foi desenvolvida para ser compatível com as restrições de recursos de dispositivos de entrada/médio porte. Para validar a eficiência do acelerador, adotou-se o modelo LeNet-5 (LeCun et al., 1998) devido aos seguintes fatores técnicos:
+
+* Estrutura Abrangente: Contém todas as camadas fundamentais de uma CNN moderna (convolução, pooling e totalmente conectada), permitindo validar o datapath do acelerador em diferentes cenários de processamento.
+
+* Gestão de Memória: Possui uma complexidade moderada que permite o armazenamento completo de pesos e mapas de características na memória interna (BRAM) do FPGA, facilitando o estudo de latência e largura de banda sem gargalos externos iniciais.
+
+*Análise de Desempenho: A estrutura da rede é suficientemente rica para permitir a análise de estratégias de paralelismo espacial e reutilização temporal de dados, focos principais desta pesquisa.
 
 ## Resumo do Projeto
 
