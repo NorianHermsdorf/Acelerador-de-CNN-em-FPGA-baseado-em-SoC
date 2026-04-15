@@ -1,8 +1,6 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
-
--- Importante: Certifique-se de que o package_of_types foi compilado antes
 use WORK.package_of_types.all;
 
 entity conv_datapath is
@@ -23,12 +21,10 @@ architecture Behavioral of conv_datapath is
     CONSTANT KERNEL_SIZE     : INTEGER := KERNEL * KERNEL;
     CONSTANT MAX_KERNEL_SIZE : INTEGER := 25; -- Trava o tamanho maximo fisico para 5x5
     
-    -- Agora os arrays têm SEMPRE tamanho 25 fisicamente
     type prod_array_t is array(1 to MAX_KERNEL_SIZE) of signed(ACC_WIDTH-1 downto 0);
     type array_prod_array_t is array(1 TO PARALLEL_FILTERS) of prod_array_t;
     signal prods : array_prod_array_t := (others => (others => (others => '0')));
 
-    -- Usa o mesmo tipo (tamanho 25) para s1 e s2
     type stage1_sum is array(1 TO PARALLEL_FILTERS) of prod_array_t;
     signal s1 : stage1_sum := (others => (others => (others => '0'))); 
     signal s2 : stage1_sum := (others => (others => (others => '0')));
@@ -50,14 +46,13 @@ begin
             if rising_edge(clk) then
                 
                 -- ==========================================
-                -- ESTAGIO 1: Multiplicacao com Zero-Padding
+                -- ESTAGIO 1: Multiplicacao
                 -- ==========================================
                 for i in 1 to MAX_KERNEL_SIZE loop
                     if i <= KERNEL_SIZE then
-                        -- Multiplica normalmente o que pertence ao kernel (ex: 1 a 9)
                         prods(p)(i) <= resize(window_in(i) * weights_in(p)(i), ACC_WIDTH);
                     else
-                        -- Preenche o resto com zero para nao dar out-of-bounds
+                        -- Preenche o resto com zero
                         prods(p)(i) <= (others => '0');
                     end if;
                 end loop;
