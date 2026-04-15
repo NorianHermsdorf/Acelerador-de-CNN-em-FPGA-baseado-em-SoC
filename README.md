@@ -12,7 +12,7 @@ O objetivo deste trabalho é mitigar o custo computacional das operações de Mu
 
 O sistema baseia-se na co-projeto hardware/software, utilizando a infraestrutura do SoC Zynq-7000 para acelerar as camadas convolucionais da LeNet-5.
 
-![Diagrama do Acelerador](./img/diagrama_acelerador.png)
+![Diagrama do Acelerador](./img/diagrama_arquitetura.png)
 
 *O diagrama acima ilustra a integração entre o PS (ARM) e a PL (FPGA), destacando os controladores de memória, barramentos AXI e o fluxo de dados para os aceleradores.*
 
